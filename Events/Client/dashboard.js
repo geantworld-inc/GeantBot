@@ -3,6 +3,7 @@ const DBD = require("discord-dashboard")
 const SelectedTheme = require("dbd-dark-dashboard")
 const Verification = require("../../Schemas/Verification")
 const WelcomeSchema = require("../../Schemas/Welcome")
+const LevelUp = require('../../Schemas/LevelUp')
 
 module.exports = {
     name: "ready",
@@ -16,14 +17,17 @@ module.exports = {
         let Information = []
         let Moderation = []
         let Owner = []
+        let Level = []
 
         const info = client.commands.filter(x => x.category === "Information")
         const mod = client.commands.filter(x => x.category === "Moderation")
         const owner = client.commands.filter(x => x.category === "Owner")
+        const level = client.commands.filter(x => x.category === "Level")
 
         CommandPush(info, Information)
         CommandPush(mod, Moderation)
         CommandPush(owner, Owner)
+        CommandPush(level, Level)
 
         await DBD.useLicense(process.env.DBD)
         DBD.Dashboard = DBD.UpdatedClass()
@@ -281,6 +285,44 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                categoryId: "Level",
+                categoryName: "Level System",
+                categoryDescription: "Setup the Level Channel",
+                categoryOptionsList: [
+                    {
+                        optionId: "LevelChn",
+                        categoryName: "Level Channel",
+                        optionDescription: "Messages to send when new level",
+                        optionType: DBD.formTypes.channelsSelect(false, channelType = [ChannelType.GuildText]),
+                        getActualSet: async ({ guild }) => {
+                            let data = await LevelUp.findOne({ Guild: guild.id })
+                            if (data) return data.Channel
+                            else return null
+                        },
+                        setNew: async ({ guild, newData }) => {
+                            let data = await LevelUp.findOne({Guild: guild.id}).catch(err => console.log(err))
+
+                            if (!newData) newData = null
+
+                            if (!data) {
+                                data = new LevelUp({
+                                    Guild: guild.id,
+                                    Channel: newData
+                                })
+
+                                await data.save()
+            
+                            } else {
+                                data.Channel = newData
+                                await data.save()
+                            }
+
+                            return
+                        }
+                    }
+                ]  
             }
         ],
         bot: client,
@@ -339,6 +381,12 @@ module.exports = {
                         subTitle: "Owner commands",
                         aliasesDisabled: true,
                         list: Owner
+                    },
+                    {
+                        category: "Level",
+                        subTitle: "Level Commands",
+                        aliasesDisabled: true,
+                        list: Level
                     }
                 ]
             }

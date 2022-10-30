@@ -17,6 +17,8 @@ const client = new Client({
 client.events = new Collection()
 client.commands = new Collection()
 
+require("./Systems/GiveawaySystem")(client)
+
 const Handlers = ["Events", "Commands", "Errors"]
 
 Handlers.forEach(handler => {
