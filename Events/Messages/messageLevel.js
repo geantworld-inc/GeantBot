@@ -50,9 +50,10 @@ module.exports = {
             if(ChannelData) {
                 const Channel = guild.channels.cache.get(ChannelData.Channel)
 
-                if(!Channel) return message.channel.send({embeds: [embed]})
+                if(!Channel) return message.channel.send({content: `${message.author}`, embeds: [embed]})
 
                 Channel.send({
+                    content: `${message.author}`,
                     embeds: [embed]
                 })
             }
