@@ -1,16 +1,17 @@
-const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder, Client, ChatInputCommandInteraction } = require('discord.js');
-const db = require("../../Schemas/ticket");
+const { Client, ChatInputCommandInteraction, EmbedBuilder  } = require("discord.js")
+const Reply = require("../../Systems/Reply")
+const db = require("../../Schemas/ticket")
 
 module.exports = {
-    name: "ticket-setup",
-    description: "Ticket Systems",
+    name: "ticket",
+    description: "ticket action",
     category: "Tickets Systems",
     UserPerms: ["Administrator"],
     BotPerms: ["Administrator"],
     options: [
         {
             name: "action",
-            description: "Add or remove member from this tickets",
+            description: "Add or remove member from this ticket",
             type: 3,
             required: true,
             choices: [
@@ -26,22 +27,22 @@ module.exports = {
         },
         {
             name: "member",
-            description: "Select a member",
+            description: "user to add",
             type: 6,
             required: true
         }
     ],
     /**
-     * @param {Client} client 
-     * @param {ChatInputCommandInteraction} interaction 
+     * @param {Client} client
+     * @param {ChatInputCommandInteraction} interaction
      */
-    async execute (interaction, client) {
+    async execute(interaction, client) {
         const { guildId, options, channel } = interaction
 
         const Action = options.getString("action")
         const Member = options.getMember("member")
 
-        const Embed = new EmbedBuilder()
+        const Embed = new EmbedBuilder().setColor("Random")
 
         switch(Action) {
             case "add":

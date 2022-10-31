@@ -10,7 +10,7 @@ module.exports = async (client) => {
         .setTimestamp()
         .setFooter({text: "Anti-crash by GeantWorld Inc."})
     process.on("unhandledRejection", (reason, p) => {
-        // console.log(reason, p)
+        console.log(reason, p)
 
         const Channel = client.channels.cache.get(ChannelID)
         if (!Channel) return
@@ -23,7 +23,7 @@ module.exports = async (client) => {
     })
 
     process.on("uncaughtException", (err, origin) => {
-        // console.log(err, origin)
+        console.log(err, origin)
 
         const Channel = client.channels.cache.get(ChannelID)
         if (!Channel) return
@@ -36,7 +36,7 @@ module.exports = async (client) => {
     })
 
     process.on("uncaughtExceptionMonitor", (err, origin) => {
-       // console.log(err, origin)
+       console.log(err, origin)
 
         const Channel = client.channels.cache.get(ChannelID)
         if (!Channel) return
