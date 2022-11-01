@@ -13,21 +13,21 @@ module.exports = {
             name: "channel",
             description: "Select a channel for ticket create panel",
             type: 7,
-            ChannelTypes: ChannelType.GuildText,
+            channelTypes: [ChannelType.GuildText],
             required: true
         },
         {
             name: "category",
             description: "Select Category for ticket creation",
             type: 7,
-            ChannelTypes: ChannelType.GuildCategory,
+            channelTypes: [ChannelType.GuildCategory],
             required: true
         },
         {
             name: "transcripts",
             description: "Select the transcripts channels",
             type: 7,
-            ChannelTypes: ChannelType.GuildText,
+            channelTypes: [ChannelType.GuildText],
             required: true
         },
         {

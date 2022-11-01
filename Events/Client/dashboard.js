@@ -40,6 +40,12 @@ module.exports = {
         },
         redirectUri: `http://localhost/discord/callback`,
         domain: `http://localhost:80/`,
+        invite: {
+            ClientId: process.env.clientId,
+            scopes: ["bot", "applications.commands", "guilds", "identify"],
+            permissions: "8",
+            redirectUrl: "https://discord.gg/K5rhbzJrf8"
+        },
         settings: [
             {
                 categoryId: "Welcome",

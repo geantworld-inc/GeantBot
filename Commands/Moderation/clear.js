@@ -12,6 +12,8 @@ module.exports = {
             name: "amount",
             description: "Amount of messages to clear.",
             type: 4,
+            minValue: 1,
+            maxValue: 99,
             required: true,
         },
         {

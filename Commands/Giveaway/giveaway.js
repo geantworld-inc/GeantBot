@@ -36,7 +36,7 @@ module.exports = {
                     name: "channel",
                     description: "Select a channel to send the giveaway",
                     type: 7,
-                    channelType: ChannelType.GuildText
+                    channelTypes: [ChannelType.GuildText]
                 }
             ]
         },
