@@ -38,13 +38,17 @@ module.exports = {
             id: process.env.clientId,
             secret: process.env.clientSecret
         },
-        redirectUri: `http://localhost/discord/callback`,
-        domain: `http://localhost:80/`,
+        redirectUri: `https://dash.geantworldinc.tk/discord/callback`,
+        domain: `https://dash.geantworldinc.tk`,
         invite: {
             ClientId: process.env.clientId,
             scopes: ["bot", "applications.commands", "guilds", "identify"],
             permissions: "8",
             redirectUrl: "https://discord.gg/K5rhbzJrf8"
+        },
+        supportServer: {
+            slash: "/support",
+            inviteUrl: "https://discord.gg/K5rhbzJrf8"
         },
         settings: [
             {
@@ -86,7 +90,7 @@ module.exports = {
                     {
                         optionId: "welcmsg",
                         categoryName: "Welcome Message",
-                        optionDescription: "Send Message to DM of newly joined member",
+                        optionDescription: "Send Message of newly joined member",
                         optionType: DBD.formTypes.embedBuilder({
                             username: user.username,
                             avatarURL: user.avatarURL(),
@@ -340,7 +344,7 @@ module.exports = {
                     websiteTitle: "GeantBot",
                     websiteName: "GeantBot",
                     websiteUrl: "http://geantworld.tk",
-                    dashboardUrl: `http://localhost:80/`,
+                    dashboardUrl: `https://dash.geantworldinc.tk/`,
                     supporteMail: "support@geantworld.tk",
                     supportServer: "https://discord.gg/8PC3dQt6Pq",
                     imageFavicon: "https://media.discordapp.net/attachments/1036644441005502465/1037308160794439680/GeantBot.png",

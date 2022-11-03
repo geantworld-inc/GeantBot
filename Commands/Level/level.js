@@ -50,7 +50,7 @@ module.exports = {
         const attachment = new AttachmentBuilder(Card, { name: "level.png" })
 
         const Embed = new EmbedBuilder()
-        .setColor("Random")
+        .setColor(member.displayHexColor)
         .setTitle(`${member.user.username}'s Level Card`)
         .setImage("attachment://level.png")
         .setFooter({text: `Level System | Made by GeantWorld Inc.`})

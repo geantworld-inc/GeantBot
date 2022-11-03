@@ -19,8 +19,8 @@ module.exports = {
             new ButtonBuilder()
                 .setStyle(ButtonStyle.Link)
                 .setLabel("Go to the dashboard")
-                .setURL("https://dashboard.geantbot.tk")
-                .setDisabled(true)
+                .setURL("https://dash.geantworldinc.tk/")
+                .setDisabled(false)
         )
 
         await interaction.reply({embeds: [embed], components: [row]})
