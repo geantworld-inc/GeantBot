@@ -1,6 +1,8 @@
 const { Perms } = require("../Validation/Permissions")
 const { Client } = require("discord.js")
 const ms = require("ms")
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 /**
  * @param { Client } client
@@ -27,6 +29,19 @@ module.exports = async (client, PG, Ascii) => {
     })
 
     console.log(Table.toString())
+
+    const rest = new REST({ version: '9'}).setToken(process.env.TOKEN);
+        try {
+            console.log("Commands Loading...")
+
+            await rest.put(Routes.applicationCommands(process.env.clientId, process.env.guildId), {
+                body: CommandsArray,
+            });
+
+            console.log("Commands loaded with no errors :)")
+        } catch (error) {
+            console.error(error);
+        }
 
     client.on("ready", () => {
         setInterval(() => {
