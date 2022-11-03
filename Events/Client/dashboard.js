@@ -38,8 +38,8 @@ module.exports = {
             id: process.env.clientId,
             secret: process.env.clientSecret
         },
-        redirectUri: `https://dash.geantworldinc.tk/discord/callback`,
-        domain: `https://dash.geantworldinc.tk`,
+        redirectUri: `https://manage.geantworldinc.tk/discord/callback`,
+        domain: `https://manage.geantworldinc.tk`,
         invite: {
             ClientId: process.env.clientId,
             scopes: ["bot", "applications.commands", "guilds", "identify"],
