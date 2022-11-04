@@ -42,12 +42,4 @@ module.exports = async (client, PG, Ascii) => {
         } catch (error) {
             console.error(error);
         }
-
-    client.on("ready", () => {
-        setInterval(() => {
-            client.guilds.cache.forEach(guild => {
-                guild.commands.set(CommandsArray)
-            })
-        }, ms("5s"));
-    })
 }
