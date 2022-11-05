@@ -1,4 +1,4 @@
-const { Client, ChatInputCommandInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require("discord.js")
+const { Client, ChatInputCommandInteraction, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, ChannelType } = require("discord.js")
 const Reply = require("../../Systems/Reply")
 const polls = require("../../Schemas/pollDB")
 const { find } = require('node-emoji')
@@ -22,7 +22,8 @@ module.exports = {
             name: "channel",
             type: 7,
             required: true,
-            description: "The channel where you want create the poll"
+            description: "The channel where you want create the poll",
+            channelTypes: [ChannelType.GuildText]
         }, {
             name: "options",
             type: 3,
