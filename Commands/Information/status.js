@@ -1,28 +1,48 @@
-const { Client, ChatInputCommandInteraction, ButtonBuilder, ButtonStyle, ActionRowBuilder, EmbedBuilder } = require("discord.js")
+const { Client, ChatInputCommandInteraction, EmbedBuilder } = require("discord.js")
 const Reply = require("../../Systems/Reply")
+const EditReply = require("../../Systems/EditReply")
 const { connection } = require("mongoose")
 
 module.exports = {
     name: "status",
-    description: "Display the status",
+    description: "Get Bot Status",
     category: "Information",
     /**
      * @param {Client} client
      * @param {ChatInputCommandInteraction} interaction
      */
     async execute(interaction, client) {
-        await interaction.deferReply()
+        const msg = await interaction.deferReply({fetchReply: true})
 
-        const button = new ButtonBuilder() 
-        .setLabel('status page !')
-        .setURL('https://geantbot.statuspage.io/')
-        .setStyle(ButtonStyle.Link)
+        const embed = new EmbedBuilder()
+        .setTitle("Bot stats")
+        .setDescription("My stats")
+        .addFields(
+            {
+                name: "Discord API latency",
+                value: `${client.ws.ping} ms`,
+                inline: true
+            },
+            {
+                name: "BOT Latency",
+                value: `${msg.createdTimestamp - interaction.createdTimestamp} ms`,
+                inline: true
+            },
+        )
+        .addFields(
+            {
+                name: "Database",
+                value: `\`${switchTo(connection.readyState)}\``,
+                inline: true,
+            },
+            {
+                name: "uptime",
+                value: `<t:${parseInt(client.readyTimestamp / 1000)}:R>`,
+                inline: true
+            }
+        )
+        .setColor("Blue")
 
-
-            const embed = new EmbedBuilder()
-            .setTitle("Status")
-            .setDescription(`**Client**: \`🟢 ONLINE\` - \`${client.ws.ping} ms\`\n **uptime**: <t:${parseInt(client.readyTimestamp / 1000)}:R>\n\n**Database**: \`${switchTo(connection.readyState)}\``)
-       
 
         function switchTo(val) {
             var status = " ";
@@ -39,9 +59,6 @@ module.exports = {
             return status
         }
 
-        return interaction.editReply({
-            embeds: [embed],
-            components: [new ActionRowBuilder().addComponents(button)]
-        });
+        interaction.editReply({embeds: [embed]})
     }
 }
