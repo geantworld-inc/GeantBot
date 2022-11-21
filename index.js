@@ -1,30 +1,21 @@
-const { Client, Partials, Collection } = require("discord.js")
-const ms = require("ms")
-const { promisify } = require("util")
-const { glob } = require("glob")
-const PG = promisify(glob)
-const Ascii = require("ascii-table")
-require("dotenv").config()
+const { Client, GatewayIntentBits, Partials, Collection } = require("discord.js")
+const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits
 const { Channel, GuildMember, Message, Reaction, ThreadMember, User, GuildScheduledEvent } = Partials
+const { loadCommands } = require("./Handlers/commandHandler")
+const { loadEvents }  = require("./Handlers/eventHandler")
+const { err } = require("./Handlers/error")
+require("dotenv").config()
+const ms = require("ms")
 
 const client = new Client({
     intents: 131071,
     partials: [Channel, GuildMember, Message, Reaction, ThreadMember, User, GuildScheduledEvent],
-    allowedMentions: { parse: ["everyone", "roles", "users"] },
-    rest: { timeout: ms("1m") }
-})
+  })
 
-client.events = new Collection()
 client.commands = new Collection()
 
-require("./Systems/GiveawaySystem")(client)
-
-const Handlers = ["Events", "Commands", "Errors"]
-
-Handlers.forEach(handler => {
-    require(`./Handlers/${handler}`)(client, PG, Ascii)
+client.login(process.env.token).then(() => {
+    loadEvents(client)
+    loadCommands(client)
+    err(client)
 })
-
-module.exports = client
-
-client.login(process.env.TOKEN)
